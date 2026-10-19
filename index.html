@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ฝึกตอบปัญหาเกษตร</title>
+<title>ฝึกตอบปัญหาเกษตร ชุด A</title>
 <meta name="description" content="แบบฝึกตอบปัญหาทางการเกษตร 100 ข้อ แบ่งเป็น 5 ชุด ด้านพืช สัตว์ เกษตรทั่วไป และนวัตกรรมเกษตร">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,6 +68,7 @@ i{font-family:var(--read);font-style:italic}
 .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
 .btn.ghost:hover{border-color:var(--ink);filter:none}
 .btn:disabled{opacity:.45;cursor:default;filter:none}
+.other a{color:var(--ink);font-weight:600;text-underline-offset:3px}
 footer{margin-top:2.5rem;font-size:.88rem;color:var(--muted)}
 footer p{margin:.2rem 0}
 
@@ -153,6 +154,8 @@ const LVL = {1:"ง่าย", 2:"กลาง", 3:"ยาก"};
 const LETTERS = ["ก","ข","ค","ง"];
 const SECONDS = 30;
 const STORE_KEY = "agri-quiz-practice-v1";
+const PREFIX = "A";
+const setName = k => `ชุด ${PREFIX}${k+1}`;
 const byId = Object.fromEntries(QUESTIONS.map(q => [q.id, q]));
 
 /* ---------- answer checking ---------- */
@@ -233,15 +236,16 @@ function renderHome(){
     const last = rec && rec.last ? ids.map(id => rec.last[id]) : null;
     const meta = rec && rec.best!=null ? `ดีที่สุด ${rec.best}/20 จากที่ทำไป ${rec.attempts} ครั้ง` : "ยังไม่ได้ทำ";
     return `<li class="set-row">
-      <div><h2>ชุดที่ ${k+1}</h2><div class="set-meta">${meta}</div></div>
+      <div><h2>${setName(k)}</h2><div class="set-meta">${meta}</div></div>
       ${trayHTML(ids, last)}
       <button class="btn" data-start="${k}">${rec && rec.best!=null ? "ทำอีกครั้ง" : "เริ่มทำ"}</button>
     </li>`;
   }).join("");
   app.innerHTML = `
     <header class="home-head">
-      <h1>ฝึกตอบปัญหาเกษตร</h1>
-      <p>100 ข้อ แบ่งเป็น 5 ชุด ชุดละ 20 ข้อ แต่ละชุดมีคำถามด้านพืช สัตว์ เกษตรทั่วไป และนวัตกรรมเกษตร หมวดละ 5 ข้อ ความยากใกล้เคียงกันทุกชุด เมื่อตอบแต่ละข้อจะเห็นเฉลยและคำอธิบายทันที</p>
+      <h1>ฝึกตอบปัญหาเกษตร ชุด ${PREFIX}</h1>
+      <p>100 ข้อ แบ่งเป็น 5 ชุดย่อย ชุดละ 20 ข้อ แต่ละชุดมีคำถามด้านพืช สัตว์ เกษตรทั่วไป และนวัตกรรมเกษตร หมวดละ 5 ข้อ ความยากใกล้เคียงกันทุกชุด เมื่อตอบแต่ละข้อจะเห็นเฉลยและคำอธิบายทันที</p>
+      <p class="other">ทำชุดนี้ครบแล้ว ต่อด้วย <a href="set-b.html">ชุด B</a> อีก 100 ข้อ</p>
       <ul class="legend" aria-label="สีของหมวด">
         <li><span class="dot" style="background:var(--c-p)"></span>พืช</li>
         <li><span class="dot" style="background:var(--c-a)"></span>สัตว์</li>
@@ -297,7 +301,7 @@ function renderQuestion(){
   app.innerHTML = `
     <div class="topbar">
       <button class="linkbtn" id="quit">กลับไปเลือกชุด</button>
-      <span class="count">${S.review?"ทบทวนข้อที่ผิด":"ชุดที่ "+(S.setIdx+1)} ข้อ ${S.k+1}/${S.ids.length} <span class="sr">ตอบถูกแล้ว ${right} ข้อ</span></span>
+      <span class="count">${S.review?"ทบทวนข้อที่ผิด":setName(S.setIdx)} ข้อ ${S.k+1}/${S.ids.length} <span class="sr">ตอบถูกแล้ว ${right} ข้อ</span></span>
     </div>
     ${trayHTML(S.ids, S.results, "big", S.k)}
     ${store.settings.timer ? `<div class="timer" id="timer"><span></span></div>` : ""}
@@ -430,15 +434,15 @@ function renderResult(){
   }).join("");
   app.innerHTML = `
     <div class="topbar"><button class="linkbtn" id="home">กลับไปเลือกชุด</button></div>
-    <h1>${S.review ? "ทบทวนข้อที่ผิดเสร็จแล้ว" : "ชุดที่ "+(S.setIdx+1)+" เสร็จแล้ว"}</h1>
+    <h1>${S.review ? "ทบทวนข้อที่ผิดเสร็จแล้ว" : setName(S.setIdx)+" เสร็จแล้ว"}</h1>
     <p class="score">${right}<small> / ${n}</small></p>
     <p class="verdict">${verdict}</p>
     ${trayHTML(S.ids, S.results, "big")}
     <ul class="bycat">${cats}</ul>
     <div class="actions">
       ${wrongIds.length ? `<button class="btn" id="retryWrong">ทบทวนเฉพาะข้อที่ผิด (${wrongIds.length} ข้อ)</button>` : ""}
-      <button class="btn ${wrongIds.length?"ghost":""}" id="again">ทำชุดที่ ${S.setIdx+1} ใหม่ทั้งชุด</button>
-      ${S.setIdx<SETS.length-1 ? `<button class="btn ghost" id="nextSet">ไปชุดที่ ${S.setIdx+2}</button>` : ""}
+      <button class="btn ${wrongIds.length?"ghost":""}" id="again">ทำ${setName(S.setIdx)} ใหม่ทั้งชุด</button>
+      ${S.setIdx<SETS.length-1 ? `<button class="btn ghost" id="nextSet">ไป${setName(S.setIdx+1)}</button>` : ""}
     </div>
     ${wrongIds.length ? `<section class="review"><h2>ข้อที่ยังตอบไม่ถูก</h2><ol>${review}</ol></section>` : ""}`;
   const setIdx=S.setIdx;
