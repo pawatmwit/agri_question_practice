@@ -69,6 +69,7 @@ i{font-family:var(--read);font-style:italic}
 .btn.ghost:hover{border-color:var(--ink);filter:none}
 .btn:disabled{opacity:.45;cursor:default;filter:none}
 .other a{color:var(--ink);font-weight:600;text-underline-offset:3px}
+.other strong{color:var(--ink)}
 footer{margin-top:2.5rem;font-size:.88rem;color:var(--muted)}
 footer p{margin:.2rem 0}
 
@@ -245,7 +246,7 @@ function renderHome(){
     <header class="home-head">
       <h1>ฝึกตอบปัญหาเกษตร ชุด ${PREFIX}</h1>
       <p>100 ข้อ แบ่งเป็น 5 ชุดย่อย ชุดละ 20 ข้อ แต่ละชุดมีคำถามด้านพืช สัตว์ เกษตรทั่วไป และนวัตกรรมเกษตร หมวดละ 5 ข้อ ความยากใกล้เคียงกันทุกชุด เมื่อตอบแต่ละข้อจะเห็นเฉลยและคำอธิบายทันที</p>
-      <p class="other">ชุดนี้เป็นคำถามใหม่ทั้งหมด ไม่ซ้ำกับ <a href="index.html">ชุด A</a></p>
+      <p class="other">ชุดคำถามทั้งหมด: <a href="index.html">ชุด A</a> · <strong>ชุด B</strong> · <a href="set-c.html">ชุด C</a> · <a href="set-d.html">ชุด D</a> · <a href="set-e.html">ชุด E</a></p>
       <ul class="legend" aria-label="สีของหมวด">
         <li><span class="dot" style="background:var(--c-p)"></span>พืช</li>
         <li><span class="dot" style="background:var(--c-a)"></span>สัตว์</li>
